@@ -1,0 +1,14 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    color: #FFF;
+    background-color: #ebf2f5;
+}
+
+body, input, button, textarea {
+    font: 400 18px 'Noto Sans TC', sans-serif
+}
