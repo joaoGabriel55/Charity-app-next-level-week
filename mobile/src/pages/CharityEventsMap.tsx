@@ -1,16 +1,31 @@
-import React from 'react'
-import { StyleSheet, View, Dimensions, Text, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, View, Dimensions, Text } from 'react-native';
 import MapView, { Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
 import { Feather } from '@expo/vector-icons'
 import mapMaker from '../images/map-marker.png'
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { RectButton } from 'react-native-gesture-handler';
+import api from '../services/api';
+import ICharityEvent from '../interfaces/ICharityEvent';
 
 export default function CharityEventsMap() {
-
   const navigation = useNavigation()
 
-  function handleNavigateToCharityEventDetails() {
-    navigation.navigate('CharityEventDetails')
+  const [charityEvents, setCharityEvents] = useState<ICharityEvent[]>([])
+
+  useFocusEffect(() => {
+    api.get('charity_events').then(response => {
+      setCharityEvents(response.data)
+    })
+  })
+
+
+  function handleNavigateToCharityEventDetails(id: number) {
+    navigation.navigate('CharityEventDetails', { id })
+  }
+
+  function handleNavToCreateEvent() {
+    navigation.navigate('SelectMapPosition')
   }
 
   return (
@@ -24,28 +39,33 @@ export default function CharityEventsMap() {
           latitudeDelta: 0.008,
           longitudeDelta: 0.008
         }} >
-        <Marker
-          icon={mapMaker}
-          calloutAnchor={{
-            x: 2.7,
-            y: 0.8
-          }}
-          coordinate={{
-            latitude: -5.8027658,
-            longitude: -35.2079938,
-          }} >
-          <Callout tooltip={true} onPress={handleNavigateToCharityEventDetails}>
-            <View style={styles.calloutContainer}>
-              <Text style={styles.calloutText}>Sopa</Text>
-            </View>
-          </Callout>
-        </Marker>
+        {charityEvents.map((event) => {
+          return (
+            <Marker
+              key={event.id}
+              icon={mapMaker}
+              calloutAnchor={{
+                x: 2.7,
+                y: 0.8
+              }}
+              coordinate={{
+                latitude: event.latitude,
+                longitude: event.longitude,
+              }} >
+              <Callout tooltip={true} onPress={() => handleNavigateToCharityEventDetails(event.id)}>
+                <View style={styles.calloutContainer}>
+                  <Text style={styles.calloutText}>{event.name}</Text>
+                </View>
+              </Callout>
+            </Marker>
+          )
+        })}
       </MapView>
       <View style={styles.footer}>
-        <Text style={styles.footerText}>2 Eventos encontrados</Text>
-        <TouchableOpacity style={styles.createEventBtn} onPress={() => { }}>
+        <Text style={styles.footerText}>{charityEvents.length} Eventos encontrados</Text>
+        <RectButton style={styles.createEventBtn} onPress={handleNavToCreateEvent}>
           <Feather name="plus" size={20} color="#FFF" />
-        </TouchableOpacity>
+        </RectButton>
       </View>
     </>
   )
