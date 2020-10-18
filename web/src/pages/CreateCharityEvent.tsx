@@ -1,5 +1,7 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useSnackbar } from 'react-simple-snackbar';
+
 import { Map, Marker, TileLayer } from 'react-leaflet';
 import { LeafletMouseEvent } from 'leaflet'
 
@@ -10,9 +12,14 @@ import Sidebar from "../components/Sidebar";
 
 import mapIcon from '../utils/mapIcon'
 import API from "../services/api";
+import SnackBarProps from '../utils/snackBarProps'
 
 export default function CreateCharityEvent() {
   const history = useHistory()
+
+  const { setSnackBarProps, success, error } = SnackBarProps
+  const [openSnackbarSuccess] = useSnackbar(setSnackBarProps(success))
+  const [openSnackbarError] = useSnackbar(setSnackBarProps(error))
 
   const [position, setPosition] = useState({ latitude: 0, longitude: 0 })
 
@@ -63,10 +70,10 @@ export default function CreateCharityEvent() {
     await API.post('charity_events', data)
       .catch(err => {
         console.log(err)
-        alert(`Erro ao registrar Evento de caridade ${name}.`)
+        openSnackbarError(`Erro ao registrar Evento de caridade ${name}.`)
       })
 
-    alert(`Evento de caridade ${name} registrado com sucesso!`)
+    openSnackbarSuccess(`Evento de caridade ${name} registrado com sucesso!`)
     history.push('/events')
   }
 

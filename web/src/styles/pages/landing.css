@@ -1,7 +1,8 @@
 #page-landing {
     width: 100vw;
     height: 100vh;
-    background: linear-gradient(329.54deg, #299cd1 0%, #007ec7 100%);
+    background: radial-gradient(rgba(255,255,255,0) 0, rgba(255,255,255,0) 0,  #007ec7), url('../../images/background.jpg') 50% center;
+    background-size: cover;
 
     display: flex;
     justify-content: center;
@@ -21,8 +22,6 @@
     align-items: flex-start;
     flex-direction: column;
     justify-content: space-between;
-
-    background: url('../../images/landing.svg') no-repeat 80% center;
 }
 
 #page-landing .content-wrapper main {

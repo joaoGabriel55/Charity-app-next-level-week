@@ -12,8 +12,8 @@ export default function Landing() {
             <div className="content-wrapper">
                 <img src={logoImg} alt="Charity-logo" />
                 <main>
-                    <h1>Help people in your city!</h1>
-                    <p>Visit or participate of Charity events around your city.</p>
+                    <h1>Ajude pessoas em sua cidade!</h1>
+                    <p>Visite e participe de eventos de caridade pela sua cidade.</p>
                 </main>
                 <div className="location">
                     <strong>Natal</strong>

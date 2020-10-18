@@ -21,15 +21,11 @@ export class createEvents1602632546990 implements MigrationInterface {
         },
         {
           name: 'latitude',
-          type: 'decimal',
-          scale: 10,
-          precision: 2
+          type: 'decimal'
         },
         {
           name: 'longitude',
-          type: 'decimal',
-          scale: 10,
-          precision: 2
+          type: 'decimal'
         },
         {
           name: 'about',

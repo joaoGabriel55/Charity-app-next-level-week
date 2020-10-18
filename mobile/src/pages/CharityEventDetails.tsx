@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Image, View, ScrollView, Text, StyleSheet, Dimensions, Linking } from 'react-native';
+import { Image, View, ScrollView, Text, StyleSheet, Dimensions, Linking, ActivityIndicator } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { Feather, FontAwesome } from '@expo/vector-icons';
 
@@ -22,14 +22,17 @@ export default function CharityEventDetails() {
 
   useEffect(() => {
     api.get(`charity_events/${params.id}`).then(response => {
+      const { latitude, longitude } = response.data
+      response.data.latitude = parseFloat(latitude)
+      response.data.longitude = parseFloat(longitude)
       setCharityEvent(response.data)
     })
   }, [params.id])
 
   if (!charityEvent) {
     return (
-      <View style={styles.container}>
-        <Text style={styles.description}>Carregando...</Text>
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator color="#007ec7" size="large"></ActivityIndicator>
       </View>
     )
   }
@@ -43,7 +46,11 @@ export default function CharityEventDetails() {
       <View style={styles.imagesContainer}>
         <ScrollView horizontal pagingEnabled>
           {charityEvent.images.map(image => {
-            return (<Image key={image.id} style={styles.image} source={{ uri: image.url }} />)
+            return (<Image
+              key={image.id}
+              style={styles.image}
+              source={{ uri: image.url }}
+              onLoadStart={() => <ActivityIndicator color="#007ec7" size="large"></ActivityIndicator>} />)
           })}
         </ScrollView>
       </View>
@@ -55,8 +62,8 @@ export default function CharityEventDetails() {
         <View style={styles.mapContainer}>
           <MapView
             initialRegion={{
-              latitude: -5.8027658,
-              longitude: -35.2079938,
+              latitude: charityEvent.latitude,
+              longitude: charityEvent.longitude,
               latitudeDelta: 0.008,
               longitudeDelta: 0.008,
             }}
@@ -118,6 +125,12 @@ export default function CharityEventDetails() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+
+  loadingContainer: {
+    justifyContent: 'center', //Centered vertically
+    alignItems: 'center', // Centered horizontally
+    flex: 1
   },
 
   imagesContainer: {

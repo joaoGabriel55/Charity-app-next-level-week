@@ -6,14 +6,14 @@ import '../styles/pages/event-map.css'
 
 import { motion, AnimatePresence } from 'framer-motion'
 
-import mapMarkerImg from '../images/map-marker.svg';
 import mapIcon from '../utils/mapIcon'
 import API from '../services/api'
 import ICharityEvent from '../interfaces/ICharityEvent'
+import AppIcon from '../components/AppIcon'
 
 export default function EventsMap() {
   const [events, setEvents] = useState<ICharityEvent[]>([])
-  
+
   useEffect(() => {
     API.get('charity_events').then(response => {
       setEvents(response.data)
@@ -26,9 +26,9 @@ export default function EventsMap() {
         <div id="page-map">
           <aside>
             <header>
-              <img src={mapMarkerImg} alt="icon" />
-              <h2>Choose an Event on map</h2>
-              <p>Make people feel good</p>
+              <AppIcon />
+              <h2>Procure por eventos de caridade</h2>
+              <p>Faça as pessoas sorrirem</p>
             </header>
             <footer>
               <strong>Natal</strong>
@@ -38,7 +38,7 @@ export default function EventsMap() {
           <Map
             center={[-5.7834861, -35.2450641]}
             zoom={12}
-            style={{ width: '100%', height: '100%' }} >
+            style={{ width: '100%', height: '100%', zIndex: 1 }} >
             <TileLayer url={`https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`} />
             {events.map((event: ICharityEvent) => (
               <Marker

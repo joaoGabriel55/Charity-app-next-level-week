@@ -1,13 +1,13 @@
-# Charity app
+# Charity app - Front end
 
-The objective of this app is help people to find charity events that help people to feel good.
+## How to run
 
-Thanks Rocketseat team for support in [3rd Next Level Week](https://nextlevelweek.com/inscricao/3).
+    npm run start
 
-## Tecnologies
+### Able maps
 
-Front-end app:
+Create an account in [mapbox](https://www.mapbox.com/) and get your token.
 
-- React.js
-- Typescript
-- Leaflet
+And with your token in hands, create a .env file and add:
+
+    REACT_APP_MAPBOX_TOKEN=your_token

@@ -129,7 +129,7 @@ export default function CharityEventData() {
         onChangeText={text => setInstructions(text)}
       />
 
-      <Text style={styles.label}>Horario de visitas</Text>
+      <Text style={styles.label}>Horário</Text>
       <TextInput
         style={styles.input}
         value={startHours}
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
   },
 
   nextButton: {
-    backgroundColor: '#15c3d6',
+    backgroundColor: '#007ec7',
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',

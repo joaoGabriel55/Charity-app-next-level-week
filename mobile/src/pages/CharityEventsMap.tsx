@@ -15,6 +15,11 @@ export default function CharityEventsMap() {
 
   useFocusEffect(() => {
     api.get('charity_events').then(response => {
+      response.data.forEach((elem: any) => {
+        const { latitude, longitude } = elem
+        elem.latitude = parseFloat(latitude)
+        elem.longitude = parseFloat(longitude)
+      })
       setCharityEvents(response.data)
     })
   })
@@ -45,8 +50,8 @@ export default function CharityEventsMap() {
               key={event.id}
               icon={mapMaker}
               calloutAnchor={{
-                x: 2.7,
-                y: 0.8
+                x: 0.5,
+                y: -0.1
               }}
               coordinate={{
                 latitude: event.latitude,
@@ -54,7 +59,7 @@ export default function CharityEventsMap() {
               }} >
               <Callout tooltip={true} onPress={() => handleNavigateToCharityEventDetails(event.id)}>
                 <View style={styles.calloutContainer}>
-                  <Text style={styles.calloutText}>{event.name}</Text>
+                  <Text numberOfLines={1} style={styles.calloutText}>{event.name}</Text>
                 </View>
               </Callout>
             </Marker>
@@ -85,9 +90,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   calloutText: {
-    color: '#0089A5',
+    color: '#007ec7',
     fontFamily: 'NotoSansTC_700Bold',
-    fontSize: 14
+    fontSize: 14,
+    width: 100
   },
   footer: {
     position: 'absolute',
@@ -112,7 +118,7 @@ const styles = StyleSheet.create({
   createEventBtn: {
     width: 56,
     height: 56,
-    backgroundColor: 'blue',
+    backgroundColor: '#007ec7',
     borderRadius: 20,
 
     justifyContent: 'center',

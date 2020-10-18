@@ -20,7 +20,7 @@ export default function Header({ title, showCancel = true }: HeaderProps) {
   return (
     <View style={styles.container}>
       <BorderlessButton onPress={navigation.goBack}>
-        <Feather name="arrow-left" size={24} color="blue" ></Feather>
+        <Feather name="arrow-left" size={24} color="#007ec7" ></Feather>
       </BorderlessButton>
       <Text style={styles.title}>{title}</Text>
       {showCancel ?

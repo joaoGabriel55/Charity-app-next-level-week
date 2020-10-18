@@ -5,7 +5,7 @@ export default {
         return {
             id: image.id,
             // TODO - Use .env
-            url: `http://172.20.10.9:3333/uploads/${image.path}`
+            url: `http://192.168.0.44:3333/uploads/${image.path}`
         }
     },
     renderMany(images: Image[]) {
