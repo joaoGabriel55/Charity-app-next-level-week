@@ -5,6 +5,7 @@
   "username": "postgres",
   "password": "sgeolpass",
   "database": "charity",
+  "synchronize": true,
   "migrations": [
     "./src/database/migrations/*.ts"
   ],

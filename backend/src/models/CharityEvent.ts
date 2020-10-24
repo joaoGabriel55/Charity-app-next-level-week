@@ -24,6 +24,9 @@ export default class CharityEvent {
     instructions: string
 
     @Column()
+    wpp_number: string
+
+    @Column()
     start_hours: string
 
     @Column()
