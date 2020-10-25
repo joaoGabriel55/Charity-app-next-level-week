@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, Dimensions, Text } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, Dimensions, Text, Alert } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 import { RectButton } from 'react-native-gesture-handler';
@@ -11,6 +11,20 @@ export default function SelectMapPosition() {
   const navigation = useNavigation();
 
   const [position, setPosition] = useState({ latitude: 0, longitude: 0 })
+  const [currentPosition, setCurrentPosition] = useState({ latitude: 0, longitude: 0 })
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      (position: Position) => {
+        const { latitude, longitude } = position.coords
+
+        const location = { latitude, longitude }
+        setCurrentPosition(location)
+      },
+      (error: PositionError) => Alert.alert(error.message),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+    )
+  }, [])
 
   function handleNextStep() {
     navigation.navigate('CharityEventData', { position });
@@ -22,26 +36,28 @@ export default function SelectMapPosition() {
 
   return (
     <View style={styles.container}>
-      <MapView
-        initialRegion={{
-          latitude: -5.8027658,
-          longitude: -35.2079938,
-          latitudeDelta: 0.008,
-          longitudeDelta: 0.008,
-        }}
-        style={styles.mapStyle}
-        onPress={handleSelectMapPosition}
-      >
-        {position.latitude !== 0 && (
-          <Marker
-            icon={mapMarkerImg}
-            coordinate={{
-              latitude: position.latitude,
-              longitude: position.longitude
-            }}
-          />
-        )}
-      </MapView>
+      {currentPosition.latitude !== 0 && (
+        <MapView
+          initialRegion={{
+            latitude: currentPosition.latitude,
+            longitude: currentPosition.longitude,
+            latitudeDelta: 0.008,
+            longitudeDelta: 0.008,
+          }}
+          style={styles.mapStyle}
+          onPress={handleSelectMapPosition}
+        >
+          {position.latitude !== 0 && (
+            <Marker
+              icon={mapMarkerImg}
+              coordinate={{
+                latitude: position.latitude,
+                longitude: position.longitude
+              }}
+            />
+          )}
+        </MapView>
+      )}
 
       {position.latitude !== 0 && (
         <RectButton style={styles.nextButton} onPress={handleNextStep}>
