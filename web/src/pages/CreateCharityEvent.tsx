@@ -27,6 +27,7 @@ export default function CreateCharityEvent() {
   const [about, setAbout] = useState('')
   const [instructions, setInstructions] = useState('')
   const [startHours, setStartHours] = useState('')
+  const [wppNumber, setWppNumber] = useState('')
   const [occursOnWeekends, setOccursOnWeekends] = useState(true)
   const [images, setImages] = useState<File[]>([])
   const [previewImages, setPreviewImages] = useState<string[]>([])
@@ -62,6 +63,7 @@ export default function CreateCharityEvent() {
     data.append('longitude', String(longitude))
     data.append('about', about)
     data.append('instructions', instructions)
+    data.append('wpp_number', wppNumber)
     data.append('start_hours', startHours)
     data.append('occurs_on_weekends', String(occursOnWeekends))
 
@@ -102,6 +104,11 @@ export default function CreateCharityEvent() {
             <div className="input-block">
               <label htmlFor="name">Nome</label>
               <input id="name" value={name} onChange={event => setName(event.target.value)} />
+            </div>
+
+            <div className="input-block">
+              <label htmlFor="wpp-number">Whatsapp</label>
+              <input id="wpp-number" value={wppNumber} onChange={event => setWppNumber(event.target.value)} />
             </div>
 
             <div className="input-block">

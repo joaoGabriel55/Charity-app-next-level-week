@@ -163,3 +163,8 @@
 .charity-event-details .charity-event-details-content button.contact-button:hover {
   background: #36CF82;
 }
+
+.charity-event-details .charity-event-details-content button.contact-button a {
+  text-decoration: none;
+  color: white;
+}
