@@ -4,6 +4,7 @@ export default interface ICharityEvent {
     longitude: number,
     name: string,
     about: string,
+    wpp_number: string,
     instructions: string,
     start_hours: string,
     occurs_on_weekends: string

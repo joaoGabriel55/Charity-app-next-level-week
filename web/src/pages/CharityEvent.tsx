@@ -109,7 +109,9 @@ export default function CharityEvent() {
 
             <button type="button" className="contact-button">
               <FaWhatsapp size={20} color="#FFF" />
-              Entrar em contato
+              <a href={`https://wa.me/${event.wpp_number}`} target="_blank" rel="noopener noreferrer">
+                Entrar em contato
+              </a>
             </button>
           </div>
         </div>

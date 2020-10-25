@@ -11,17 +11,20 @@ export default class CharityEvent {
     @Column()
     name: string
 
-    @Column()
-    latitude: number
+    @Column({ type: 'real' })
+    latitude: string
 
-    @Column()
-    longitude: number
+    @Column({ type: 'real' })
+    longitude: string
 
     @Column()
     about: string
 
     @Column()
     instructions: string
+
+    @Column()
+    wpp_number: string
 
     @Column()
     start_hours: string

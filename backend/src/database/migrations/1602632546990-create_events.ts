@@ -28,6 +28,10 @@ export class createEvents1602632546990 implements MigrationInterface {
           type: 'decimal'
         },
         {
+          name: 'wpp_number',
+          type: 'text'
+        },
+        {
           name: 'about',
           type: 'text'
         },

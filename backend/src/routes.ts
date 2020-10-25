@@ -26,6 +26,7 @@ routes.post('/charity_events', upload.array('images'), async (req, res) => {
         longitude,
         about,
         instructions,
+        wpp_number,
         start_hours,
         occurs_on_weekends
     } = req.body
@@ -43,6 +44,7 @@ routes.post('/charity_events', upload.array('images'), async (req, res) => {
         longitude,
         about,
         instructions,
+        wpp_number,
         start_hours,
         occurs_on_weekends: occurs_on_weekends === 'true' ? true : false,
         images

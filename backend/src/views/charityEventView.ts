@@ -10,6 +10,7 @@ export default {
             longitude: event.longitude,
             about: event.about,
             instructions: event.instructions,
+            wpp_number: event.wpp_number,
             start_hours: event.start_hours,
             occurs_on_weekends: event.occurs_on_weekends,
             images: imagesView.renderMany(event.images)
