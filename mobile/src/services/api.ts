@@ -1,7 +1,8 @@
+import { REACT_APP_API_URL } from '@env'
 import axios from 'axios'
 
 const api = axios.create({
-    baseURL: 'http://192.168.0.44:3333'
+    baseURL: REACT_APP_API_URL
 })
 
 export default api

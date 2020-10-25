@@ -41,6 +41,10 @@ export default function CharityEventDetails() {
     Linking.openURL(`https://www.google.com/maps/dir/?api=1&destination=${charityEvent?.latitude},${charityEvent?.longitude}`)
   }
 
+  function handleOpenWhatsAppLink() {
+    Linking.openURL(`https://wa.me/${charityEvent?.wpp_number}`)
+  }
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.imagesContainer}>
@@ -113,7 +117,7 @@ export default function CharityEventDetails() {
             )}
         </View>
 
-        <RectButton style={styles.contactButton} onPress={() => { }}>
+        <RectButton style={styles.contactButton} onPress={handleOpenWhatsAppLink}>
           <FontAwesome name="whatsapp" size={24} color="#FFF" />
           <Text style={styles.contactButtonText}>Entrar em contato</Text>
         </RectButton>

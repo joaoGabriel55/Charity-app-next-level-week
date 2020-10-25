@@ -23,9 +23,9 @@ export default function CharityEventData() {
   const [about, setAbout] = useState('')
   const [instructions, setInstructions] = useState('')
   const [startHours, setStartHours] = useState('')
+  const [wppNumber, setWppNumber] = useState('')
   const [occursOnWeekends, setOccursOnWeekends] = useState(true)
   const [images, setImages] = useState<string[]>([])
-  const [previewImages, setPreviewImages] = useState<string[]>([])
 
   async function handleSelectImages() {
     const { status } = await ImagePicker.requestCameraRollPermissionsAsync()
@@ -56,6 +56,7 @@ export default function CharityEventData() {
     data.append('longitude', String(longitude))
     data.append('about', about)
     data.append('instructions', instructions)
+    data.append('wpp_number', wppNumber)
     data.append('start_hours', startHours)
     data.append('occurs_on_weekends', String(occursOnWeekends))
 
@@ -98,6 +99,8 @@ export default function CharityEventData() {
       <Text style={styles.label}>Whatsapp</Text>
       <TextInput
         style={styles.input}
+        value={wppNumber}
+        onChangeText={text => setWppNumber(text)}
       />
 
       <Text style={styles.label}>Fotos</Text>

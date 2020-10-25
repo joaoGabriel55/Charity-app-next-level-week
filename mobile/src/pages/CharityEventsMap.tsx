@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, View, Dimensions, Text } from 'react-native';
+import { StyleSheet, View, Dimensions, Text, Alert } from 'react-native';
 import MapView, { Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
 import { Feather } from '@expo/vector-icons'
 import mapMaker from '../images/map-marker.png'
@@ -12,6 +12,20 @@ export default function CharityEventsMap() {
   const navigation = useNavigation()
 
   const [charityEvents, setCharityEvents] = useState<ICharityEvent[]>([])
+  const [currentPosition, setCurrentPosition] = useState({ latitude: 0, longitude: 0 })
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      (position: Position) => {
+        const { latitude, longitude } = position.coords
+
+        const location = { latitude, longitude }
+        setCurrentPosition(location)
+      },
+      (error: PositionError) => Alert.alert(error.message),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+    )
+  }, [])
 
   useFocusEffect(() => {
     api.get('charity_events').then(response => {
@@ -35,37 +49,39 @@ export default function CharityEventsMap() {
 
   return (
     <>
-      <MapView
-        provider={PROVIDER_GOOGLE}
-        style={styles.map}
-        initialRegion={{
-          latitude: -5.8027658,
-          longitude: -35.2079938,
-          latitudeDelta: 0.008,
-          longitudeDelta: 0.008
-        }} >
-        {charityEvents.map((event) => {
-          return (
-            <Marker
-              key={event.id}
-              icon={mapMaker}
-              calloutAnchor={{
-                x: 0.5,
-                y: -0.1
-              }}
-              coordinate={{
-                latitude: event.latitude,
-                longitude: event.longitude,
-              }} >
-              <Callout tooltip={true} onPress={() => handleNavigateToCharityEventDetails(event.id)}>
-                <View style={styles.calloutContainer}>
-                  <Text numberOfLines={1} style={styles.calloutText}>{event.name}</Text>
-                </View>
-              </Callout>
-            </Marker>
-          )
-        })}
-      </MapView>
+      {currentPosition.latitude !== 0 && (
+        <MapView
+          provider={PROVIDER_GOOGLE}
+          style={styles.map}
+          initialRegion={{
+            latitude: currentPosition.latitude,
+            longitude: currentPosition.longitude,
+            latitudeDelta: 0.008,
+            longitudeDelta: 0.008
+          }} >
+          {charityEvents.map((event) => {
+            return (
+              <Marker
+                key={event.id}
+                icon={mapMaker}
+                calloutAnchor={{
+                  x: 0.5,
+                  y: -0.1
+                }}
+                coordinate={{
+                  latitude: event.latitude,
+                  longitude: event.longitude,
+                }} >
+                <Callout tooltip={true} onPress={() => handleNavigateToCharityEventDetails(event.id)}>
+                  <View style={styles.calloutContainer}>
+                    <Text numberOfLines={1} style={styles.calloutText}>{event.name}</Text>
+                  </View>
+                </Callout>
+              </Marker>
+            )
+          })}
+        </MapView>
+      )}
       <View style={styles.footer}>
         <Text style={styles.footerText}>{charityEvents.length} Eventos encontrados</Text>
         <RectButton style={styles.createEventBtn} onPress={handleNavToCreateEvent}>
