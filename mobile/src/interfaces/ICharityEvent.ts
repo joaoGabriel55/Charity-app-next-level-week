@@ -5,6 +5,7 @@ export default interface ICharityEvent {
     name: string,
     about: string,
     instructions: string,
+    wpp_number: string,
     start_hours: string,
     occurs_on_weekends: string
     images: Array<{
