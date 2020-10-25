@@ -1,11 +1,12 @@
+require('dotenv').config()
+
 import Image from "../models/Image"
 
 export default {
     render(image: Image) {
         return {
             id: image.id,
-            // TODO - Use .env
-            url: `http://172.20.10.9:3333/uploads/${image.path}`
+            url: `${process.env.APP_IMAGE_URL}/${image.path}`
         }
     },
     renderMany(images: Image[]) {
