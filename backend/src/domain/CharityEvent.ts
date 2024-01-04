@@ -16,7 +16,7 @@ export namespace CharityEvent {
 
   export type Type = Readonly<Props>;
 
-  export type CreateType = Omit<Type, "id" | "images"> & {
+  export type CreateType = Omit<Type, "images"> & {
     images: Array<{ path: string }>;
   };
 

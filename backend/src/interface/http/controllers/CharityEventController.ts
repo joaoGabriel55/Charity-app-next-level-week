@@ -45,6 +45,7 @@ export class CharityEventController {
       };
     });
     const result = await this.charityEventRepository.store({
+      id: this.charityEventRepository.getNextId(),
       name,
       latitude,
       longitude,

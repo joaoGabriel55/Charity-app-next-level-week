@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import { CharityEvent } from "../domain/CharityEvent";
 import { CharityEventRepository } from "../domain/CharityEventRepository";
 import CharityEventModel from "../lib/models/CharityEvent";
+import { Id } from "../domain/Id";
 
 const makeCharityEventRepository = (): CharityEventRepository => {
   const repository = getRepository(CharityEventModel);
@@ -16,6 +17,8 @@ const makeCharityEventRepository = (): CharityEventRepository => {
       occursOnWeekends: model.occurs_on_weekends === "true",
     };
   };
+
+  const getNextId = () => Id.create();
 
   const find = async () => {
     const result = await repository.find({ relations: ["images"] });
@@ -34,6 +37,7 @@ const makeCharityEventRepository = (): CharityEventRepository => {
 
   const store = async (event: CharityEvent.CreateType) => {
     const schema = Yup.object().shape({
+      id: Yup.number().required(),
       name: Yup.string().required(),
       latitude: Yup.number().required(),
       longitude: Yup.number().required(),
@@ -59,7 +63,7 @@ const makeCharityEventRepository = (): CharityEventRepository => {
     return CharityEvent.create(parser(result));
   };
 
-  return { find, findById, store };
+  return { find, getNextId, findById, store };
 };
 
 export default makeCharityEventRepository;
