@@ -3,6 +3,7 @@ import cors from "cors";
 import express from "express";
 import "express-async-errors";
 import path from "path";
+import { isTestEnv } from "../../config/environment";
 import "../../database/connection";
 import errorHandler from "../../exceptions/handler";
 import { loadContainer } from "../container";
@@ -17,10 +18,12 @@ app.use(errorHandler);
 
 loadContainer(app);
 
-app.use(
-  loadControllers("controllers/*.ts", { cwd: __dirname })
-);
+app.use(loadControllers("controllers/*.ts", { cwd: __dirname }));
 
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
-});
+if (!isTestEnv) {
+  app.listen(3000, () => {
+    console.log("Server is running on port 3000");
+  });
+}
+
+export { app };
