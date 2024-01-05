@@ -63,7 +63,9 @@ const makeCharityEventRepository = (): CharityEventRepository => {
     return CharityEvent.create(parser(result));
   };
 
-  return { find, getNextId, findById, store };
+  const remove = async (id: number) => {};
+
+  return { find, getNextId, findById, store, remove };
 };
 
 export default makeCharityEventRepository;

@@ -28,7 +28,14 @@ const makeCharityEventRepositoryMock = (): CharityEventRepository => {
     return mockData[mockData.length - 1];
   };
 
-  return { find, getNextId, findById, store };
+  const remove = async (id: number) => {
+    mockData.splice(
+      mockData.findIndex((event) => event.id === id),
+      1
+    );
+  };
+
+  return { find, getNextId, findById, store, remove };
 };
 
 export default makeCharityEventRepositoryMock;

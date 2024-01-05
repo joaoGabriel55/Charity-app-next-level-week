@@ -1,4 +1,4 @@
-import { GET, POST, route } from "awilix-express";
+import { DELETE, GET, POST, route } from "awilix-express";
 import { Request, Response } from "express";
 import { CharityEventRepository } from "../../../domain/CharityEventRepository";
 
@@ -21,10 +21,13 @@ export class CharityEventController {
     const id = parseInt(req.params.id);
     const result = await this.charityEventRepository.findById(id);
 
+    if (!result) {
+      return res.status(404).json({ error: "Charity event not found" });
+    }
+
     return res.status(200).json(result);
   }
 
-  @route("/:id")
   @POST()
   async store(req: Request, res: Response) {
     const {
@@ -38,7 +41,7 @@ export class CharityEventController {
       occursOnWeekends,
     } = req.body;
 
-    const requestImages = req.files as Express.Multer.File[];
+    const requestImages = (req.files as Express.Multer.File[]) || [];
     const images = requestImages.map((image) => {
       return {
         path: image.filename,
@@ -58,5 +61,20 @@ export class CharityEventController {
     });
 
     return res.status(201).json(result);
+  }
+
+  @route("/:id")
+  @DELETE()
+  async delete(req: Request, res: Response) {
+    const id = parseInt(req.params.id);
+    const result = await this.charityEventRepository.findById(id);
+
+    if (!result) {
+      return res.status(404).json({ error: "Charity event not found" });
+    }
+
+    await this.charityEventRepository.remove(id);
+
+    return res.status(204).send();
   }
 }

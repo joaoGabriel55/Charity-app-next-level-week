@@ -5,5 +5,5 @@ export interface CharityEventRepository {
   find: () => Promise<Array<CharityEvent.Type>>;
   findById: (id: number) => Promise<CharityEvent.Type | undefined>;
   store: (event: CharityEvent.CreateType) => Promise<CharityEvent.Type>;
-  // remove: (id: number) => Promise<void>;
+  remove: (id: number) => Promise<void>;
 }
