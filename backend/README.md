@@ -18,7 +18,7 @@ npm run typeorm migration:revert
 
 Edit *ormconfig.json*
 
-```
+```json
 {
   "type": "postgres",
   "host": "your_host",
@@ -39,9 +39,14 @@ Edit *ormconfig.json*
 ```
 
 And create your database via SQL
-
-    CREATE DATABASE charity;
+```bash
+psql -h localhost -p 5432 -U admin
+```
+```sql
+CREATE DATABASE charity;
+```
 
 ## How to start
-
-    npm run dev
+```
+npm run dev
+```
