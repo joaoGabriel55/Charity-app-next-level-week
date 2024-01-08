@@ -1,40 +1,38 @@
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany, JoinColumn } from 'typeorm'
-import Image from './Image'
+import { Column, Entity, JoinColumn, OneToMany, PrimaryColumn } from "typeorm";
+import Image from "./Image";
 
-
-@Entity('charity_events')
+@Entity("charity_events")
 export default class CharityEvent {
+  @PrimaryColumn({ type: "uuid" })
+  id: string;
 
-    @PrimaryGeneratedColumn('increment')
-    id: number
+  @Column()
+  name: string;
 
-    @Column()
-    name: string
+  @Column({ type: "decimal" })
+  latitude: number;
 
-    @Column({ type: 'real' })
-    latitude: string
+  @Column({ type: "decimal" })
+  longitude: number;
 
-    @Column({ type: 'real' })
-    longitude: string
+  @Column()
+  about: string;
 
-    @Column()
-    about: string
+  @Column()
+  instructions: string;
 
-    @Column()
-    instructions: string
+  @Column()
+  wpp_number: string;
 
-    @Column()
-    wpp_number: string
+  @Column()
+  start_hours: string;
 
-    @Column()
-    start_hours: string
+  @Column()
+  occurs_on_weekends: boolean;
 
-    @Column()
-    occurs_on_weekends: string
-
-    @OneToMany(() => Image, image => image.charityEvent, {
-        cascade: ['insert', 'update']
-    })
-    @JoinColumn({ name: 'charity_event_id' })
-    images: Image[]
+  @OneToMany(() => Image, (image) => image.charityEvent, {
+    cascade: ["insert", "update"],
+  })
+  @JoinColumn({ name: "charity_event_id" })
+  images: Image[];
 }

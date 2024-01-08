@@ -11,7 +11,7 @@ const makeCharityEventRepositoryMock = (): CharityEventRepository => {
     return mockData;
   };
 
-  const findById = async (id: number) => {
+  const findById = async (id: string) => {
     const result = mockData.find((event) => event.id === id);
 
     return result && CharityEvent.create({ ...result, images: [] });
@@ -28,7 +28,7 @@ const makeCharityEventRepositoryMock = (): CharityEventRepository => {
     return mockData[mockData.length - 1];
   };
 
-  const remove = async (id: number) => {
+  const remove = async (id: string) => {
     mockData.splice(
       mockData.findIndex((event) => event.id === id),
       1

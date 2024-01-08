@@ -14,11 +14,12 @@ app.use(express.json());
 app.use(cors());
 app.use(express.json());
 app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
-app.use(errorHandler);
 
 loadContainer(app);
 
 app.use(loadControllers("controllers/*.ts", { cwd: __dirname }));
+
+app.use(errorHandler);
 
 if (!isTestEnv) {
   app.listen(3000, () => {
