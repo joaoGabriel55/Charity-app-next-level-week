@@ -1,17 +1,15 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm'
-import CharityEvent from './CharityEvent'
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
+import CharityEvent from "./CharityEvent";
 
-
-@Entity('images')
+@Entity("images")
 export default class Image {
+  @PrimaryColumn({ type: "uuid" })
+  id: string;
 
-    @PrimaryGeneratedColumn('increment')
-    id: number
+  @Column()
+  path: string;
 
-    @Column()
-    path: string
-
-    @ManyToOne(() => CharityEvent, charityEvent => charityEvent.images)
-    @JoinColumn({ name: 'charity_event_id' })
-    charityEvent: CharityEvent
+  @ManyToOne(() => CharityEvent, (charityEvent) => charityEvent.images)
+  @JoinColumn({ name: "charity_event_id" })
+  charityEvent: CharityEvent;
 }

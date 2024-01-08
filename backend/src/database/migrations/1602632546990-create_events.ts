@@ -9,11 +9,10 @@ export class createEvents1602632546990 implements MigrationInterface {
       columns: [
         {
           name: 'id',
-          type: 'integer',
-          unsigned: true,
+          type: 'uuid',
           isPrimary: true,
-          isGenerated: true,
-          generationStrategy: 'increment'
+          isGenerated: false,
+          isNullable: false,
         },
         {
           name: 'name',
